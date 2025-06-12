@@ -14,6 +14,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
+axios.defaults.baseURL = "http://localhost:3000";
 
 const app = createApp(App);
 
