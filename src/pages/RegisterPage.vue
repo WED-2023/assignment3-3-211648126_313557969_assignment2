@@ -64,7 +64,7 @@
 <script>
 import { reactive, onMounted } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
-import { required, helpers, email, sameAs} from '@vuelidate/validators';
+import { required, helpers, email} from '@vuelidate/validators';
 
 const alphaOnly = helpers.regex(/^[A-Za-z]{3,8}$/);
 const strongPassword = helpers.regex(/^(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\W]{5,10}$/);
@@ -82,13 +82,17 @@ export default {
       email: '',
     });
 
+    const sameAsPassword = helpers.withMessage(
+     'Passwords must match.',
+      value => value === state.password
+    )
     const rules = {
       username: { required, alphaOnly },
       firstName: { required },
       lastName: { required },
       country: { required },
       password: { required, strongPassword },
-      confirmPassword: { required, sameAsPassword: sameAs(() => state.password) },
+      confirmPassword: { required, sameAsPassword},
       email: { required, email },
     };
 
