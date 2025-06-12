@@ -48,18 +48,64 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
+  background-image: url("../Assets/Recipe.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #nav {
-  padding: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
+  border-bottom: 1px solid #eaeaea;
 }
 
 #nav a {
-  font-weight: bold;
+  font-weight: 500;
   color: #2c3e50;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+  padding-bottom: 4px;
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+#nav a::after {
+  content: "";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: #42b983;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#nav a:hover {
+  color: #42b983;
+}
+
+#nav a:hover::after {
+  width: 100%;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
+  font-weight: bold;
 }
+#nav span{
+  flex-grow: 1;
+  text-align: center;
+}
+
 </style>
