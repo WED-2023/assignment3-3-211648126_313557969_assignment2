@@ -13,7 +13,9 @@
         <button @click="logout" class="btn btn-link p-0">Logout</button> |
       </span>
     </div>
-    <router-view />
+    <div id="page-wrapper">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -107,5 +109,13 @@ export default {
   flex-grow: 1;
   text-align: center;
 }
+#page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* full height to center vertically */
+}
+
+
 
 </style>
