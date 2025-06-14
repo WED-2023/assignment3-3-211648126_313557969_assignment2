@@ -13,11 +13,11 @@
       <div class="form-row">
         <div class="form-group col">
           <label>First Name:</label>
-          <input v-model="state.firstName" type="text" class="form-control" />
+          <input v-model="state.firstname" type="text" class="form-control" />
         </div>
         <div class="form-group col">
           <label>Last Name:</label>
-          <input v-model="state.lastName" type="text" class="form-control" />
+          <input v-model="state.lastname" type="text" class="form-control" />
         </div>
       </div>
 
@@ -65,6 +65,7 @@
 import { reactive, onMounted } from 'vue';
 import { useVuelidate } from '@vuelidate/core';
 import { required, helpers, email} from '@vuelidate/validators';
+import { useRouter } from 'vue-router';
 
 const alphaOnly = helpers.regex(/^[A-Za-z]{3,8}$/);
 const strongPassword = helpers.regex(/^(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\W]{5,10}$/);
@@ -74,13 +75,15 @@ export default {
   setup(_, { expose }) {
     const state = reactive({
       username: '',
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       country: '',
       password: '',
       confirmPassword: '',
-      email: '',
+      email:  '',
     });
+
+    const router = useRouter();
 
     const sameAsPassword = helpers.withMessage(
      'Passwords must match.',
@@ -88,8 +91,8 @@ export default {
     )
     const rules = {
       username: { required, alphaOnly },
-      firstName: { required },
-      lastName: { required },
+      firstname: { required },
+      lastname: { required },
       country: { required },
       password: { required, strongPassword },
       confirmPassword: { required, sameAsPassword},
@@ -117,11 +120,16 @@ export default {
     const register = async () => {
       if (await v$.value.$validate()) {
         try {
+          console.log("Registration data:", state);
           await window.axios.post('/register', state);
-          window.toast("Registration Successful", "You can now login", "success");
-          window.router.push('/login');
+          //window.toast("Registration Successful", "You can now login", "success");
+          alert("Registration Successful");
+          router.push('/login');
         } catch (err) {
-          window.toast("Registration failed", err.response.data.message, "danger");
+          //alert("Registration failed");
+          alert(err.response?.data?.message || "Registration failed");
+          console.error("Registration error:", err);
+          //window.toast("Registration failed", err.response.data.message, "danger");
         }
       }
     };

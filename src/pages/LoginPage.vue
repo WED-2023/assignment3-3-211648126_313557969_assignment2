@@ -63,6 +63,7 @@ const login = async () => {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
   width: 100%;
   max-width: 400px;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 .login-card h2 {
@@ -112,4 +113,16 @@ const login = async () => {
 .register-text a:hover {
   text-decoration: underline;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
