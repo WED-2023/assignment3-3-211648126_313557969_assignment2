@@ -82,9 +82,10 @@ const searchRecipes = async () => {
       diet: diet.value,
       limit: limit.value
     }
-
+    console.log("Search parameters are: ", params)
     const { data } = await window.axios.get('/recipes/search', { params })
     results.value = data
+    console.log("The search results: ", data)
   } catch (err) {
     console.error(err)
     results.value = []
@@ -102,11 +103,13 @@ const sortedResults = computed(() => {
 <style scoped>
 .search-page {
   max-width: 900px;
-  margin: auto;
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
   text-align: center;
   justify-content: top;
+  background: linear-gradient(to bottom right, #fefefe, #f0ece2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
 }
 
 .controls {
@@ -166,4 +169,5 @@ button {
 .info {
   text-align: left;
 }
+
 </style>

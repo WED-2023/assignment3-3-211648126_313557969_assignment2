@@ -13,7 +13,7 @@
         <button @click="logout" class="btn btn-link p-0">Logout</button> |
       </span>
     </div>
-    <div id="page-wrapper">
+    <div id="page-wrapper" :class="{ 'top-align': $route.name === 'search' }">
       <router-view />
     </div>
   </div>
@@ -114,8 +114,12 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh; /* full height to center vertically */
+  
 }
 
-
+#page-wrapper.top-align {
+  align-items: flex-start;
+  padding-top: 20px; /* optional spacing */
+}
 
 </style>

@@ -14,8 +14,15 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
-axios.defaults.baseURL = "http://localhost:3000";
 
+window.axios = axios.create({
+  baseURL: 'http://localhost:3000'
+});
+
+window.axios.interceptors.request.use(config => {
+  console.log("Requesting:", config.baseURL + config.url);
+  return config;
+});
 const app = createApp(App);
 
 app.use(router);
