@@ -30,6 +30,8 @@ const router = useRouter()
 
 const login = async () => {
   try {
+    console.log("username: ", username)
+    console.log("pass: ",password)
     const response = await window.axios.post('/login', {
       username: username.value,
       password: password.value
@@ -38,6 +40,7 @@ const login = async () => {
     router.push('/') // redirect after login
   } catch (error) {
     alert('Login failed')
+    console.log(error)
   }
 }
 </script>
