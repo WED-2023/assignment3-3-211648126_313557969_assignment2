@@ -65,7 +65,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
-  background-image: url("../Assets/Recipe.jpg");
+  background-image: url('../public/assets/Recipe.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }

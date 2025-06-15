@@ -2,7 +2,7 @@
   <div class="not-found">
     <h1>404</h1>
     <h2>Page not found</h2>
-    <img src="../../Assets/SmileyPlate.jpg" alt="Smiley Plate" class="not-found-image" />
+    <img src="/Assets/SmileyPlate.jpg" alt="Smiley Plate" class="not-found-image" />
     <p>Sorry, we couldn't find the page.</p>
     <router-link to="/" class="back-button">Back to Home</router-link>
   </div>
