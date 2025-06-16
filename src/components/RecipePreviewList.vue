@@ -14,16 +14,12 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
+
 export default {
   name: "RecipePreviewList",
-  components: {
-    RecipePreview
-  },
+  components: { RecipePreview },
   props: {
-    title: {
-      type: String,
-      required: true
-    }
+    title: { type: String, required: true }
   },
   data() {
     return {
@@ -36,32 +32,30 @@ export default {
   methods: {
     async updateRecipes() {
       try {
-        const response = await this.axios.get(
-          "https://api.spoonacular.com/recipes/random",
-          {
-            params: {
-              limitLicense: true,
-              number: 3,
-              apiKey: 'b7b147413c244375812ccb826d79cdcc'
-            }
-          }
-        );
+        const response = await window.axios.get("/recipes", {
+          params: { limit: 3 }
+        });
 
-        console.log("response: ", response);
-        const recipes = response.data.recipes.map((r) => {
+        console.log("RESPONSE: ", response)
+
+        const recipes = response.data.map((r) => {
           return {
             id: r.id,
             title: r.title,
-            readyInMinutes: r.readyInMinutes,
             image: r.image,
-            aggregateLikes: r.aggregateLikes
+            duration: r.duration,
+            vegan: r.vegan,
+            vegetarian: r.vegetarian,
+            glutenFree: r.glutenFree,
+            favorite: r.favorite || false,
+            viewed: r.viewed || false
           };
         });
-        this.recipes = [];
-        this.recipes.push(...recipes);
-        console.log("recipes:  " , this.recipes);
+
+        this.recipes = recipes;
+        console.log("recipes:", this.recipes);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   }

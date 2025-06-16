@@ -9,7 +9,7 @@
           <div class="wrapper">
             <div class="wrapped">
               <div class="mb-3">
-                <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
+                <div>Ready in {{ recipe.duration }} minutes</div>
                 <div>Likes: {{ recipe.aggregateLikes }} likes</div>
               </div>
               Ingredients:
@@ -75,7 +75,7 @@
           instructions,
           extendedIngredients,
           aggregateLikes,
-          readyInMinutes,
+          duration,
           image,
           title
         } = response.data.recipe;
@@ -93,7 +93,7 @@
           analyzedInstructions,
           extendedIngredients,
           aggregateLikes,
-          readyInMinutes,
+          duration,
           image,
           title
         };
