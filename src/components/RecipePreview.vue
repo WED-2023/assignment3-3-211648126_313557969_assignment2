@@ -35,13 +35,16 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { reactive, watch } from 'vue'
+import { reactive, watch, getCurrentInstance } from 'vue'
 
 const props = defineProps({
   recipe: { type: Object, required: true }
 })
 
 const router = useRouter()
+const { appContext }  = getCurrentInstance()
+const store  = appContext.config.globalProperties.store
+const toast  = appContext.config.globalProperties.toast 
 
 // Create reactive local copy to avoid direct prop mutation
 const localRecipe = reactive({ ...props.recipe })
@@ -57,6 +60,15 @@ watch(() => props.recipe, (newVal) => {
 const state = reactive({ saving: false })
 
 async function goToRecipe () {
+
+   if (!store.username) {
+    toast('Login required', 'Sign-in to track watched recipes', 'info', {
+      timeout: 0,    // stays until user closes it
+      closeOnClick: false,
+      draggable: false
+    })
+    return 
+  }
   try {
     localRecipe.viewed = true
     await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
@@ -67,6 +79,14 @@ async function goToRecipe () {
 
 async function toggleFavorite () {
   if (state.saving) return
+  if (!store.username) {
+    toast('Login required', 'Sign-in to manage favorites', 'info', {
+  timeout: 0,    // stays until user closes it
+  closeOnClick: false,
+  draggable: false
+  })
+    return
+  }
   state.saving = true
   const wasFav = localRecipe.favorite
   localRecipe.favorite = !wasFav

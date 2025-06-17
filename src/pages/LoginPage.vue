@@ -23,6 +23,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import store from '../store';
 
 const username = ref('')
 const password = ref('')
@@ -35,6 +36,7 @@ const login = async () => {
       password: password.value
     })
     console.log('Login successful:', response.data)
+    store.login(username.value);
     router.push('/') // redirect after login
   } catch (error) {
     alert('Login failed')
