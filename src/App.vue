@@ -1,17 +1,32 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link> |
+      <router-link :to="{ name: 'main' }">Recipes</router-link> |
       <router-link :to="{ name: 'search' }">Search</router-link> |
+      <router-link :to="{ name: 'About' }">About</router-link> |
       <span v-if="!store.username">
-        Guest:
+        Hello Guest:
         <router-link :to="{ name: 'register' }">Register</router-link> |
         <router-link :to="{ name: 'login' }">Login</router-link> |
       </span>
       <span v-else>
-        {{ store.username }}:
-        <button @click="logout" class="btn btn-link p-0">Logout</button> |
-      </span>
+      {{ store.username }}:
+
+      <!-- Personal Dropdown -->
+      <div class="dropdown d-inline">
+        <button class="btn btn-link dropdown-toggle p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Personal
+        </button>
+        <ul class="dropdown-menu">
+          <li><router-link class="dropdown-item" :to="{ name: 'favorites' }">Favorites</router-link></li>
+          <li><router-link class="dropdown-item" :to="{ name: 'myRecipes' }">My Recipes</router-link></li>
+          <li><router-link class="dropdown-item" :to="{ name: 'familyRecipes' }">Family Recipes</router-link></li>
+        </ul>
+        <router-link class="dropdown-item" :to="{ name: 'createRecipe' }">Create Recipe</router-link>
+      </div>
+
+      <button @click="logout" class="btn btn-link p-0">Logout</button> |
+    </span>
     </div>
     <div id="page-wrapper" :class="{ 'top-align': $route.name === 'search' }">
       <router-view />
@@ -50,7 +65,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
-  background-image: url("../Assets/Recipe.jpg");
+  background-image: url('../public/assets/Recipe.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
