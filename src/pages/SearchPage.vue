@@ -28,20 +28,11 @@
       </select>
     </div>
 
-    <div v-if="results.length" class="results">
-      <div class="card" v-for="r in sortedResults" :key="r.id">
-        <img :src="r.image" class="thumb" />
-        <div class="info">
-          <h2>{{ r.title }}</h2>
-          <p>⏱ {{ r.duration }} min</p>
-          <p>🔥 {{ r.calories }} kcal</p>
-          <p>
-            <span v-if="r.vegetarian">🥬 Vegetarian</span>
-            <span v-if="r.glutenFree">🌾 Gluten Free</span>
-          </p>
-        </div>
-      </div>
-    </div>
+    <RecipePreviewList
+      v-if="results.length"
+      :title="`Results (${sortedResults.length})`"
+      :recipes="sortedResults"
+    />
 
     <div v-else-if="searched">
       <p>No recipes found for "{{ query }}"</p>
@@ -51,6 +42,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import RecipePreviewList from '@/components/RecipePreviewList.vue'
 
 const query = ref('')
 const limit = ref(5)
@@ -141,33 +133,6 @@ button {
   background-color: #3b82f6;
   color: white;
   border: none;
-}
-
-.results {
-  display: grid;
-  gap: 1.5rem;
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  border: 1px solid #eee;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  background: #fff;
-}
-
-.thumb {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  margin-right: 1rem;
-  border-radius: 8px;
-}
-
-.info {
-  text-align: left;
 }
 
 </style>
