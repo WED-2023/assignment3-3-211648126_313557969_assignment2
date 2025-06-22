@@ -35,7 +35,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { reactive, watch, getCurrentInstance } from 'vue'
+import { reactive, watch, getCurrentInstance,toRaw } from 'vue'
 
 const props = defineProps({
   recipe: { type: Object, required: true }
@@ -71,9 +71,10 @@ async function goToRecipe () {
   }
   try {
     localRecipe.viewed = true
-    await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
+    // await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
   } finally {
-    router.push({ name: 'recipe', params: { recipeId: localRecipe.id } })
+    console.log("Passing recipe to recipe page : " ,  toRaw(props.recipe))
+    router.push({ name: 'recipe', params: { recipeId: localRecipe.id }, state: { recipe: toRaw(props.recipe) } })
   }
 }
 
