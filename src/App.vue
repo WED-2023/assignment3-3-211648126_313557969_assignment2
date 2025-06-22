@@ -21,13 +21,16 @@
           <li><router-link class="dropdown-item" :to="{ name: 'favorites' }">Favorites</router-link></li>
           <li><router-link class="dropdown-item" :to="{ name: 'myRecipes' }">My Recipes</router-link></li>
           <li><router-link class="dropdown-item" :to="{ name: 'familyRecipes' }">Family Recipes</router-link></li>
+          <!-- <li><router-link class="dropdown-item" :to="{ name: 'createRecipe' }">Create Recipe</router-link></li> -->
         </ul>
-        <router-link class="dropdown-item" :to="{ name: 'createRecipe' }">Create Recipe</router-link>
-      </div>
+      </div> |
 
-      <button @click="logout" class="btn btn-link p-0">Logout</button> |
+      <router-link class="btn btn-link p-0 ms-3 logout-btn" :to="{ name: 'createRecipe' }">Create Recipe</router-link> |
+
+      <button @click="logout" class="btn btn-link p-0 ms-3">Logout</button> |
     </span>
-    </div>
+
+  </div>
     <div id="page-wrapper" :class="{ 'top-align': $route.name === 'search' }">
       <router-view />
     </div>
@@ -36,6 +39,11 @@
 
 <script>
 import { getCurrentInstance } from 'vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+
+import { onMounted } from 'vue';
+import * as bootstrap from 'bootstrap';
 
 export default {
   name: "App",
@@ -50,6 +58,14 @@ export default {
       toast("Logout", "User logged out successfully", "success");
       router.push("/").catch(() => {});
     };
+
+    onMounted(() => {
+      // Initialize all dropdowns manually
+      const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+      dropdownElements.forEach((el) => {
+        new bootstrap.Dropdown(el);
+      });
+    });
 
     return { store, logout };
   }
@@ -135,6 +151,20 @@ export default {
 #page-wrapper.top-align {
   align-items: flex-start;
   padding-top: 20px; /* optional spacing */
+}
+
+.dropdown-menu .router-link-active {
+  background-color: #f8f9fa;
+}
+
+.logout-btn {
+  font-weight: bold;
+  color: #dc3545; // Bootstrap danger color (red)
+
+  &:hover {
+    color: #a71d2a;
+    text-decoration: underline;
+  }
 }
 
 </style>
