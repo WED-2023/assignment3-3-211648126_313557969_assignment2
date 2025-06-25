@@ -15,6 +15,7 @@ const router = createRouter({
   routes
 });
 
+axios.defaults.withCredentials = true;
 window.axios = axios.create({
   baseURL: 'http://localhost:3000'
 });

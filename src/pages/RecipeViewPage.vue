@@ -50,6 +50,7 @@ export default {
     const passed = route?.state?.recipe;
     console.log("router : ", router)
     console.log("route : ", route)
+    console.log("state : ", route.state)
     console.log("passed : ", passed)
     console.log("Passed recipe : " ,passed)
     if (!passed) {
