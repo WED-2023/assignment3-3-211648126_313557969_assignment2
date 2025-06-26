@@ -4,7 +4,7 @@
     <div class="modal-panel">
       <div class="modal-header">
         <h2 class="text-lg font-semibold">Create New Recipe</h2>
-        <!-- console.log for debugging + proper reactive prop -->
+        <!-- console.log for debugging  proper reactive prop -->
         <button class="close" @click="handleClose">&times;</button>
       </div>
 
@@ -49,7 +49,7 @@
             <input v-model="form.ingredients[i]" placeholder="e.g. 2 cups flour" class="flex-1 form-input" />
             <button type="button" class="btn-secondary" @click="removeIngredient(i)">✕</button>
           </div>
-          <button type="button" class="btn-add" @click="addIngredient">+ Add ingredient</button>
+          <button type="button" class="btn-add" @click="addIngredient"> Add ingredient</button>
         </div>
 
         <!-- STEPS -->
@@ -59,7 +59,7 @@
             <input v-model="form.steps[i]" placeholder="e.g. Preheat oven..." class="flex-1 form-input" />
             <button type="button" class="btn-secondary" @click="removeStep(i)">✕</button>
           </div>
-          <button type="button" class="btn-add" @click="addStep">+ Add step</button>
+          <button type="button" class="btn-add" @click="addStep"> Add step</button>
         </div>
 
         <!-- SUBMIT -->
@@ -102,7 +102,8 @@ const form = reactive({
   viewed: false,
   ingredients: [''],
   steps: [''],
-  servings: 1
+  servings: 1,
+  imageBase64: null,
 })
 
 // ---------------------------------------------------------------------------
@@ -128,39 +129,74 @@ const removeIngredient = (i) => form.ingredients.splice(i, 1)
 const addStep = () => form.steps.push('')
 const removeStep = (i) => form.steps.splice(i, 1)
 
-// Handle file input
-const handleFileUpload = (e) => {
-  const file = e.target.files[0]
-  form.imageFile = file ?? null
-}
+// // Handle file input
+// const handleFileUpload = (e) => {
+//   const file = e.target.files[0]
+//   form.imageFile = file ?? null
+// }
+
+ const handleFileUpload = (e) => {
+   const file = e.target.files[0]
+   if (!file) return
+   const reader = new FileReader()
+   reader.onload = () => {
+     form.imageBase64 = reader.result
+   }
+   reader.readAsDataURL(file)
+ }
 
 // ---------------------------------------------------------------------------
 // Submit via multipart/form-data
 // ---------------------------------------------------------------------------
-const handleSubmit = async () => {
-  try {
-    const data = new FormData()
-    data.append('title', form.title)
-    data.append('duration', form.duration)
-    data.append('servings', form.servings)
+// const handleSubmit = async () => {
+//   try {
+//     // const data = new FormData()
+//     // data.append('title', form.title)
+//     // data.append('duration', form.duration)
+//     // data.append('servings', form.servings)
 
-    data.append('vegan', form.vegan)
-    data.append('vegetarian', form.vegetarian)
-    data.append('glutenFree', form.glutenFree)
+//     // data.append('vegan', form.vegan)
+//     // data.append('vegetarian', form.vegetarian)
+//     // data.append('glutenFree', form.glutenFree)
 
-    data.append('ingredients', JSON.stringify(form.ingredients))
-    data.append('steps', JSON.stringify(form.steps))
-    if (form.imageFile) data.append('image', form.imageFile)
+//     // data.append('ingredients', JSON.stringify(form.ingredients))
+//     // data.append('steps', JSON.stringify(form.steps))
+//     // if (form.imageFile) data.append('image', form.imageFile)
 
-    await axios.post('/recipes', data, { headers: { 'Content-Type': 'multipart/form-data' } })
-    emit('created')
-    reset()
-    emit('close')
-  } catch (err) {
-    console.error('Failed to create recipe:', err)
-    alert('Something went wrong while saving the recipe.')
-  }
-}
+//     // await axios.post('/recipes', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+
+//     emit('created')
+//     reset()
+//     emit('close')
+//   } catch (err) {
+//     console.error('Failed to create recipe:', err)
+//     alert('Something went wrong while saving the recipe.')
+//   }
+// }
+
+
+ const handleSubmit = async () => {
+   try {
+     const payload = {
+       title: form.title,
+       duration: form.duration,
+       servings: form.servings,
+       vegan: form.vegan,
+       vegetarian: form.vegetarian,
+       glutenFree: form.glutenFree,
+       ingredients: form.ingredients,
+       steps: form.steps,
+       image: form.imageBase64 || null
+     }
+     await axios.post('/recipes', payload)
+     emit('created')
+     reset()
+     emit('close')
+   } catch (err) {
+     console.error('Failed to create recipe:', err)
+     alert('Something went wrong while saving the recipe.')
+   }
+ }
 </script>
 
 <style scoped>

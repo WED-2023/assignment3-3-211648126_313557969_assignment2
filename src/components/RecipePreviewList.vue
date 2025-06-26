@@ -20,7 +20,8 @@ import RecipePreview from "./RecipePreview.vue";
    components: { RecipePreview },
    props: {
     title:   { type: String, required: true },
-    recipes: { type: Array,  default: null }   // ← NEW
+    recipes: { type: Array,  default: null },
+    myRecipeMode: { type: Boolean, default: false }
    },
    data() {
      return {

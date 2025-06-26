@@ -1,11 +1,12 @@
-function getRecipeFromCacheOrFetch(recipeId, fetchFunc) {
-  const cached = JSON.parse(localStorage.getItem("recipes") || "{}");
+function getRecipeFromCacheOrFetch(recipeId, myRecipeMode, fetchFunc) {
+  const cacheKey = myRecipeMode ? "myRecipes" : "recipes";
+  const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
   if (cached[recipeId]) {
     return Promise.resolve(cached[recipeId]);
   } else {
     return fetchFunc().then(recipe => {
       cached[recipeId] = recipe;
-      localStorage.setItem("recipes", JSON.stringify(cached));
+      localStorage.setItem(cacheKey, JSON.stringify(cached));
       return recipe;
     });
   }

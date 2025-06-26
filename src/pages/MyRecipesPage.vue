@@ -20,7 +20,8 @@ export default {
     <!-- list of user-created recipes -->
     <RecipePreviewList
       v-if="myRecipes.length"
-      :recipes="myRecipes"       
+      :recipes="myRecipes"
+      :myRecipeMode="true"       
     />
 
     <!-- empty-state -->

@@ -49,6 +49,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const recipeId = route.params.recipeId;
+    const myRecipeMode = route.params.myRecipeMode;
 
     if (!recipeId) {
       router.replace('/NotFound');
@@ -56,7 +57,7 @@ export default {
     }
 
     try {
-      this.recipe = await getRecipeFromCacheOrFetch(recipeId, () =>
+      this.recipe = await getRecipeFromCacheOrFetch(recipeId, myRecipeMode, () =>
         window.axios.get(`/recipes/${recipeId}`).then(res => res.data)
       );
     } catch (err) {
