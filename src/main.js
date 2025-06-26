@@ -16,7 +16,8 @@ const router = createRouter({
 });
 
 window.axios = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3000',
+  withCredentials: true
 });
 
 window.axios.interceptors.request.use(config => {

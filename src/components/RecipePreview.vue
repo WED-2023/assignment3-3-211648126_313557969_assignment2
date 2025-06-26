@@ -71,10 +71,12 @@ async function goToRecipe () {
   }
   try {
     localRecipe.viewed = true
-    // await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
+    await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
   } finally {
-    console.log("Passing recipe to recipe page : " ,  toRaw(props.recipe))
-    router.push({ name: 'recipe', params: { recipeId: localRecipe.id }, state: { recipe: toRaw(props.recipe) } })
+    const cached = JSON.parse(localStorage.getItem("recipes") || "{}");
+    cached[localRecipe.recipeId] = localRecipe.recipe;
+    localStorage.setItem("recipes", JSON.stringify(cached));
+    router.push({ name: 'recipe', params: { recipeId: localRecipe.id }})
   }
 }
 

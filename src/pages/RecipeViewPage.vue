@@ -38,25 +38,30 @@
 
 <script>
 import { useRoute, useRouter } from 'vue-router';
+import { getRecipeFromCacheOrFetch } from '@/utils/recipeCacheUtils';
 
 export default {
   
   data () {
     return { recipe: null }
   },
-  created () {
+  async created() {
     const route = useRoute();
     const router = useRouter();
-    const passed = route?.state?.recipe;
-    console.log("router : ", router)
-    console.log("route : ", route)
-    console.log("passed : ", passed)
-    console.log("Passed recipe : " ,passed)
-    if (!passed) {
-       router.replace('/NotFound');
-      return
+    const recipeId = route.params.recipeId;
+
+    if (!recipeId) {
+      router.replace('/NotFound');
+      return;
     }
-    this.recipe = passed
+
+    try {
+      this.recipe = await getRecipeFromCacheOrFetch(recipeId, () =>
+        window.axios.get(`/recipes/${recipeId}`).then(res => res.data)
+      );
+    } catch (err) {
+      router.replace('/NotFound');
+    }
   }
 }
 </script>
