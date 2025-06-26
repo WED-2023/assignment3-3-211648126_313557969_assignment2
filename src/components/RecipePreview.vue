@@ -82,6 +82,7 @@ async function goToRecipe () {
     const cached = JSON.parse(localStorage.getItem(cacheKey) || "{}");
     cached[localRecipe.id] = localRecipe;
     localStorage.setItem(cacheKey, JSON.stringify(cached));
+    console.log("Updated localStorage cache:", localStorage.getItem(cacheKey));
     router.push({ name: 'recipe', params: { recipeId: localRecipe.id, myRecipeMode: props.myRecipeMode } })
   }
 }

@@ -1,18 +1,3 @@
-<!-- <template>
-  <h1>Favorites</h1>
-</template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style> -->
-
-
 <template>
   <div class="container mt-4">
     <h1 class="text-center mb-4">My Favorite Recipes</h1>
@@ -20,7 +5,8 @@ export default {
     <!-- show list when we have data -->
     <RecipePreviewList
       v-if="favorites.length"
-      :recipes="favorites"          
+      :recipes="favorites"
+      :myRecipeMode="false"          
     />
     <!-- fallback if no favourites -->
     <div v-else class="text-center text-muted">

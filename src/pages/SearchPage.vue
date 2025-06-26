@@ -32,6 +32,7 @@
       v-if="results.length"
       :title="`Results (${sortedResults.length})`"
       :recipes="sortedResults"
+      :myRecipeMode="false"
     />
 
     <div v-else-if="searched">

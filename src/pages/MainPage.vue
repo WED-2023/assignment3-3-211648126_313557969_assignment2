@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="title">Main Page</h1>
 
-    <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
+    <RecipePreviewList title="Random Recipes" class="RandomRecipes center" :myRecipeMode="false"/>
 
     <div v-if="!store.username" class="text-center mt-4">
       <router-link :to="{ name: 'login' }">

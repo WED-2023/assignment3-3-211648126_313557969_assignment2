@@ -1,18 +1,3 @@
-<!-- <template>
-  <h1>My Recipes</h1>
-</template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style> -->
-
-
 <template>
   <div class="container mt-4">
     <h1 class="text-center mb-4">My Recipes</h1>
