@@ -35,7 +35,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { reactive, watch, getCurrentInstance } from 'vue'
+import { reactive, watch, getCurrentInstance} from 'vue'
 
 const props = defineProps({
   recipe: { type: Object, required: true }
@@ -73,7 +73,10 @@ async function goToRecipe () {
     localRecipe.viewed = true
     await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
   } finally {
-    router.push({ name: 'recipe', params: { recipeId: localRecipe.id } })
+    const cached = JSON.parse(localStorage.getItem("recipes") || "{}");
+    cached[localRecipe.recipeId] = localRecipe.recipe;
+    localStorage.setItem("recipes", JSON.stringify(cached));
+    router.push({ name: 'recipe', params: { recipeId: localRecipe.id }})
   }
 }
 

@@ -8,6 +8,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
+// ✅ Axios global config
+axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.withCredentials = true;
+
+window.axios = axios;
+
 import store from './store';
 
 const router = createRouter({
@@ -15,8 +21,10 @@ const router = createRouter({
   routes
 });
 
+axios.defaults.withCredentials = true;
 window.axios = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3000',
+  withCredentials: true
 });
 
 window.axios.interceptors.request.use(config => {
