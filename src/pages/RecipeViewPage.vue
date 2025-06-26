@@ -38,7 +38,7 @@
 
 <script>
 import { useRoute, useRouter } from 'vue-router';
-import { getRecipeFromCacheOrFetch } from '@/utils/recipeCacheUtils';
+import { getRecipeFromCacheOrFetch } from '@/recipe_utils.js';
 
 export default {
   

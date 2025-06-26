@@ -35,7 +35,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { reactive, watch, getCurrentInstance,toRaw } from 'vue'
+import { reactive, watch, getCurrentInstance} from 'vue'
 
 const props = defineProps({
   recipe: { type: Object, required: true }

@@ -16,3 +16,5 @@ function removeRecipeFromCache(recipeId) {
   delete cached[recipeId];
   localStorage.setItem("recipes", JSON.stringify(cached));
 }
+
+export { getRecipeFromCacheOrFetch, removeRecipeFromCache }; 
