@@ -71,10 +71,10 @@ async function goToRecipe () {
   }
   try {
     localRecipe.viewed = true
-    await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
+    await window.axios.post('/users/watched', { recipeId:  localRecipe.id ?? localRecipe.recipe_id})
   } finally {
    
-    router.push({ name: 'recipe', params: { recipeId: localRecipe.id }})
+    router.push({ name: 'recipe', params: { recipeId:  localRecipe.id ?? localRecipe.recipe_id }})
   }
 }
 
@@ -93,7 +93,7 @@ async function toggleFavorite () {
   localRecipe.favorite = !wasFav
 
   try {
-    await window.axios.post('/users/favorites', { recipeId: localRecipe.id })
+    await window.axios.post('/users/favorites', { recipeId: localRecipe.id ?? localRecipe.recipe_id })
   } catch (e) {
     localRecipe.favorite = wasFav // rollback
     console.error(e)

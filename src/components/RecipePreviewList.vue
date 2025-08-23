@@ -38,7 +38,7 @@ import RecipePreview from "./RecipePreview.vue";
         console.log("Current cache before adding recipe: ", cached);
         for(const recipe of recipes){
           console.log("Adding recipe: ", recipe);
-          cached[String(recipe.id)] = recipe;
+          cached[String(recipe.id??recipe.recipe_id)] = recipe;
           console.log("Cached object: ", cached);
           
         }
