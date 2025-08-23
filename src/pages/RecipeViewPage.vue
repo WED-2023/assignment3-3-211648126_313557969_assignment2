@@ -49,7 +49,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const recipeId = route.params.recipeId;
-
+    console.log("Showing recipe id: ", recipeId)
     if (!recipeId) {
       router.replace('/NotFound');
       return;

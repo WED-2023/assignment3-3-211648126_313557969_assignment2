@@ -73,9 +73,7 @@ async function goToRecipe () {
     localRecipe.viewed = true
     await window.axios.post('/users/watched', { recipeId: localRecipe.id }).catch(() => {})
   } finally {
-    const cached = JSON.parse(localStorage.getItem("recipes") || "{}");
-    cached[localRecipe.recipeId] = localRecipe.recipe;
-    localStorage.setItem("recipes", JSON.stringify(cached));
+   
     router.push({ name: 'recipe', params: { recipeId: localRecipe.id }})
   }
 }
