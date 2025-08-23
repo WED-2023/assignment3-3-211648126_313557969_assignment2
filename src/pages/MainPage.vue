@@ -11,13 +11,9 @@
     </div>
 
     <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !store.username,
-        center: true
-      }"
-      disabled
+     v-if="results"
+       title="Last Viewed Recipes"
+      :recipes="results"
     />
   </div>
 </template>
@@ -25,7 +21,8 @@
 <script>
 import { getCurrentInstance } from 'vue';
 import RecipePreviewList from "../components/RecipePreviewList.vue";
-
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 export default {
   components: {
     RecipePreviewList
@@ -33,10 +30,25 @@ export default {
   setup() {
     const internalInstance = getCurrentInstance();
     const store = internalInstance.appContext.config.globalProperties.store;
+    const results = ref([])
+    const error = ref("")
+    const fetchLastViewed = async () => {
+      try {
+        const { data } = await axios.get('/recipes', {
+          params: { limit: 3 }
+        })
+
+        // Normalize payload shape safely
+        results.value = data;
+      } catch (e) {
+        error.value = e?.response?.data?.message || e.message || 'Failed to load recipes'
+        alert(error.value)
+    }
 
     return { store };
   }
-};
+  onMounted(fetchLastViewed);
+}};
 </script>
 
 <style lang="scss" scoped>

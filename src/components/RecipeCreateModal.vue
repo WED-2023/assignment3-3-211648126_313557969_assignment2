@@ -16,8 +16,8 @@
             <input id="title" v-model="form.title" required class="form-input" />
           </div>
           <div>
-            <label class="form-label" for="image">Upload Image</label>
-            <input id="image" type="file" accept="image/*" @change="handleFileUpload" class="form-input" />
+            <label class="form-label" for="image">Image URL</label>
+            <input id="image" v-model="form.imageURL"/>
           </div>
           <div>
             <label class="form-label" for="duration">Duration (min)</label>
@@ -88,7 +88,7 @@ const emit = defineEmits(['close', 'created','error'])
 // ---------------------------------------------------------------------------
 const form = reactive({
   title: '',
-  imageFile: null,
+  imageURL: null,
   duration: 0,
   likes: 0,
   vegan: false,
@@ -112,7 +112,7 @@ const handleClose = () => {
 const reset = () => {
   Object.assign(form, {
     title: '',
-    imageFile: null,
+    imageURL: '',
     duration: 0,
     likes: 0,
     vegan: false,
@@ -129,52 +129,22 @@ const removeIngredient = (i) => form.ingredients.splice(i, 1)
 const addStep = () => form.steps.push('')
 const removeStep = (i) => form.steps.splice(i, 1)
 
-// Handle file input
-const handleFileUpload = (e) => {
-  const file = e.target.files[0]
-  form.imageFile = file ?? null
-}
 
 // ---------------------------------------------------------------------------
-// Submit via multipart/form-data
+// Submit 
 // ---------------------------------------------------------------------------
 const handleSubmit = async () => {
   try {
-    // const data = new FormData()
-    // data.append('title', form.title)
-    // data.append('duration', form.duration)
-    // data.append('servings', form.servings)
-
-    // data.append('vegan', form.vegan)
-    // data.append('vegetarian', form.vegetarian)
-    // data.append('glutenFree', form.glutenFree)
-
-    // data.append('ingredients', JSON.stringify(form.ingredients))
-    // data.append('steps', JSON.stringify(form.steps))
-    // if (form.imageFile) data.append('image', form.imageFile)
-    // // option 1: quick array
-    // console.log([...data.entries()]);
-
-    // // option 2: pretty dump
-    // for (const [k, v] of data.entries()) {
-    // if (v instanceof File) {
-    //     console.log(`${k}: [File name=${v.name}, type=${v.type}, size=${v.size}]`);
-    // } else {
-    //     console.log(`${k}:`, v);
-    // }
-    // }
-
-    // option 3: turn into a plain object (strings only)
-    // console.log(Object.fromEntries(data.entries()));
     const payload = {
     title: form.title,
+    image:form.imageURL,
     duration: form.duration,
     servings: form.servings,
     vegan: form.vegan,
     vegetarian: form.vegetarian,
     glutenFree: form.glutenFree,
-    ingredients: form.ingredients, // array already
-    steps: form.steps               // array already
+    ingredients: form.ingredients, 
+    steps: form.steps           
     };
     await axios.post('/recipes', payload )
     emit('created')
@@ -182,7 +152,7 @@ const handleSubmit = async () => {
     // emit('close')
   } catch (err) {
     console.error('Failed to create recipe:', err)
-    alert('Something went wrong while saving the recipe.')
+    alert('Something went wrong while uploading the recipe.')
     emit('error')
   }
 }
