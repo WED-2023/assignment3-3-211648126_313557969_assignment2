@@ -140,20 +140,43 @@ const handleFileUpload = (e) => {
 // ---------------------------------------------------------------------------
 const handleSubmit = async () => {
   try {
-    const data = new FormData()
-    data.append('title', form.title)
-    data.append('duration', form.duration)
-    data.append('servings', form.servings)
+    // const data = new FormData()
+    // data.append('title', form.title)
+    // data.append('duration', form.duration)
+    // data.append('servings', form.servings)
 
-    data.append('vegan', form.vegan)
-    data.append('vegetarian', form.vegetarian)
-    data.append('glutenFree', form.glutenFree)
+    // data.append('vegan', form.vegan)
+    // data.append('vegetarian', form.vegetarian)
+    // data.append('glutenFree', form.glutenFree)
 
-    data.append('ingredients', JSON.stringify(form.ingredients))
-    data.append('steps', JSON.stringify(form.steps))
-    if (form.imageFile) data.append('image', form.imageFile)
+    // data.append('ingredients', JSON.stringify(form.ingredients))
+    // data.append('steps', JSON.stringify(form.steps))
+    // if (form.imageFile) data.append('image', form.imageFile)
+    // // option 1: quick array
+    // console.log([...data.entries()]);
 
-    await axios.post('/recipes', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    // // option 2: pretty dump
+    // for (const [k, v] of data.entries()) {
+    // if (v instanceof File) {
+    //     console.log(`${k}: [File name=${v.name}, type=${v.type}, size=${v.size}]`);
+    // } else {
+    //     console.log(`${k}:`, v);
+    // }
+    // }
+
+    // option 3: turn into a plain object (strings only)
+    // console.log(Object.fromEntries(data.entries()));
+    const payload = {
+    title: form.title,
+    duration: form.duration,
+    servings: form.servings,
+    vegan: form.vegan,
+    vegetarian: form.vegetarian,
+    glutenFree: form.glutenFree,
+    ingredients: form.ingredients, // array already
+    steps: form.steps               // array already
+    };
+    await axios.post('/recipes', payload )
     emit('created')
     reset()
     // emit('close')
