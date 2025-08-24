@@ -11,10 +11,11 @@
     </div>
 
     <RecipePreviewList
-     v-if="results"
+     v-if="!loading && results.length "
        title="Last Viewed Recipes"
       :recipes="results"
     />
+    <p v-if="loading">Loading watched recipes…</p>
   </div>
 </template>
 
@@ -30,25 +31,66 @@ export default {
   setup() {
     const internalInstance = getCurrentInstance();
     const store = internalInstance.appContext.config.globalProperties.store;
+    
     const results = ref([])
+    const loading = ref(true)
     const error = ref("")
-    const fetchLastViewed = async () => {
-      try {
-        const { data } = await axios.get('/recipes', {
-          params: { limit: 3 }
-        })
 
-        // Normalize payload shape safely
-        results.value = data;
+    const fetchLastViewed = async () => {
+     try {
+        const { data } = await axios.get('/users/watched', { params: { limit: 3 } })
+        console.log("The watched recipe IDs are: ", data)
+
+        // 1) Parse localStorage cache
+        const cached = JSON.parse(localStorage.getItem("recipes") || "{}")
+
+        // 2) Separate into cached recipes + missing IDs
+        const watchedRecipes = []
+        const missingIds = []
+
+        for (const id of (Array.isArray(data) ? data : [])) {
+          if (cached[id]) {
+            watchedRecipes.push(cached[id])
+          } else {
+            missingIds.push(id)
+          }
+        }
+
+        // 3) Fetch missing ones in parallel
+        const fetched = await Promise.all(
+          missingIds.map(async (id) => {
+            try {
+              const { data } = await axios.get(`/recipes/${id}`)
+              // save in localStorage cache for future
+              cached[id] = data
+              return data
+            } catch (err) {
+              console.error(`Failed to fetch recipe ${id}`, err)
+              return null
+            }
+          })
+        )
+
+        // 4) Merge results (cached first, then fetched)
+        const fullRecipes = [...watchedRecipes, ...fetched.filter(Boolean)]
+        results.value = fullRecipes
+
+        // 5) Save updated cache
+        localStorage.setItem("recipes", JSON.stringify(cached))
+
       } catch (e) {
         error.value = e?.response?.data?.message || e.message || 'Failed to load recipes'
         alert(error.value)
+      } finally {
+        loading.value = false
+      }
     }
 
-    return { store };
-  }
   onMounted(fetchLastViewed);
+
+  return { store, results, loading, error };
 }};
+
 </script>
 
 <style lang="scss" scoped>
