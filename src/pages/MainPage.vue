@@ -87,7 +87,7 @@ export default {
     }
 
   onMounted(fetchLastViewed);
-
+ 
   return { store, results, loading, error };
 }};
 

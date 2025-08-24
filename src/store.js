@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 const store = reactive({
   username: localStorage.getItem('username'),
   server_domain: "http://localhost:3000",
-  recipes: JSON.parse(localStorage.getItem('recipes') || '{}'),
+  randomRecipes:[],
 
   login(username) {
     localStorage.setItem('username', username);
