@@ -31,8 +31,8 @@
     </span>
 
   </div>
-    <div id="page-wrapper" :class="{ 'top-align': $route.name === 'search' }">
-      <router-view />
+    <div id="page-wrapper" :class="{ 'top-align': $route.name === 'search' }">  
+        <router-view />
     </div>
   </div>
 </template>
