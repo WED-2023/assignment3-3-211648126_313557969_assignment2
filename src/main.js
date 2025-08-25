@@ -9,7 +9,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 // ✅ Axios global config
-axios.defaults.baseURL = 'http://localhost:3000';
+//axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = "https://barak-and-nofar.cs.bgu.ac.il/";
 axios.defaults.withCredentials = true;
 
 window.axios = axios;
@@ -23,7 +24,8 @@ const router = createRouter({
 
 axios.defaults.withCredentials = true;
 window.axios = axios.create({
-  baseURL: 'http://localhost:3000',
+  //baseURL: 'http://localhost:3000',
+  baseURL: "https://barak-and-nofar.cs.bgu.ac.il/",
   withCredentials: true
 });
 

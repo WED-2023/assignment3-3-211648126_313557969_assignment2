@@ -2,7 +2,8 @@ import { reactive } from 'vue';
 
 const store = reactive({
   username: localStorage.getItem('username'),
-  server_domain: "http://localhost:3000",
+  //server_domain: "http://localhost:3000",
+  server_domain: "https://barak-and-nofar.cs.bgu.ac.il/",
   randomRecipes:[],
 
   lastSearchResults: JSON.parse(localStorage.getItem('last_search_results') || '[]'),
@@ -23,7 +24,7 @@ const store = reactive({
     localStorage.removeItem('username');
     this.username = undefined;
     localStorage.removeItem('last_search_results')
-    this.lastSearchResults = undefined;
+    this.recipes = undefined;
   }
 });
 
