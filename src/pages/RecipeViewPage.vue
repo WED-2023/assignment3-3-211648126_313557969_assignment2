@@ -7,8 +7,11 @@
 
     <div class="recipe-body">
       <div class="recipe-info-strip">
-        <span class="pill">⏱ Ready in {{ recipe.prep_time }} minutes</span>
+        <span class="pill">⏱ Ready in {{ recipe.prep_time ?? recipe.duration }} minutes</span>
         <span class="pill">🍽 Servings: {{ recipe.servings }}</span>
+        <span class="pill" v-if="recipe.vegan ?? recipe.is_vegan">🌱 Vegan&nbsp;</span>
+        <span class="pill" v-if="recipe.vegetarian ?? recipe.is_vegetarian">🥬 Vegetarian&nbsp;</span>
+        <span class="pill" v-if="recipe.glutenFree ?? recipe.is_gluten_free">🌾 GF</span>
       </div>
 
       <div class="recipe-grid">

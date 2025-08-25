@@ -28,21 +28,28 @@
       </select>
     </div>
 
+    <div v-if="store.lastSearchResults.length && results.length == 0">
+      <RecipePreviewList :recipes="store.lastSearchResults" title="Last Search" />
+    </div>
+
     <RecipePreviewList
-      v-if="results.length"
+      v-else-if="results.length"
       :title="`Results (${sortedResults.length})`"
       :recipes="sortedResults"
     />
+    
+    
 
-    <div v-else-if="searched">
+    <div v-else>
       <p>No recipes found for "{{ query }}"</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed} from 'vue'
 import RecipePreviewList from '@/components/RecipePreviewList.vue'
+import store from '@/store'
 
 const query = ref('')
 const limit = ref(5)
@@ -65,6 +72,12 @@ const diets = [
   'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo'
 ]
 
+// onBeforeMount()(() => {
+//   if (store.lastSearchResults.length > 0) {
+//     results.value = store.lastSearchResults
+//   }
+// })
+
 const searchRecipes = async () => {
   try {
     searched.value = true
@@ -77,6 +90,7 @@ const searchRecipes = async () => {
     console.log("Search parameters are: ", params)
     const { data } = await window.axios.get('/recipes/search', { params })
     results.value = data
+    store.setLastSearchResults(results.value)
     console.log("The search results: ", data)
   } catch (err) {
     console.error(err)
