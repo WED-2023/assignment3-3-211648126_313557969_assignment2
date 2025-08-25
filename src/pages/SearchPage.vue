@@ -28,7 +28,7 @@
       </select>
     </div>
 
-    <div v-if="store.lastSearchResults.length && results.length == 0">
+    <div v-if="store.lastSearchResults && !searched">
       <RecipePreviewList :recipes="store.lastSearchResults" title="Last Search" />
     </div>
 
@@ -40,7 +40,7 @@
     
     
 
-    <div v-else>
+    <div v-else-if="searched">
       <p>No recipes found for "{{ query }}"</p>
     </div>
   </div>

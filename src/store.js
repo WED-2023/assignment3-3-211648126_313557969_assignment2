@@ -23,7 +23,7 @@ const store = reactive({
     localStorage.removeItem('username');
     this.username = undefined;
     localStorage.removeItem('last_search_results')
-    this.recipes = undefined;
+    this.lastSearchResults = undefined;
   }
 });
 
