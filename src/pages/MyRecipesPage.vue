@@ -1,11 +1,11 @@
 <template>
   <div class="container mt-4">
-    <h1 class="text-center mb-4">My Recipes</h1>
-
+    
     <!-- list of user-created recipes -->
     <RecipePreviewList
       v-if="myRecipes.length"
-      :recipes="myRecipes"       
+      :recipes="myRecipes"
+      title="My Recipes"       
     />
 
     <!-- empty-state -->

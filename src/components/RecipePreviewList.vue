@@ -125,4 +125,10 @@ import store from '../store'
 .container {
   min-height: 400px;
 }
+h3{
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+}
 </style>
