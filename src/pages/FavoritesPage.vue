@@ -15,12 +15,11 @@ export default {
 
 <template>
   <div class="container mt-4">
-    <h1 class="text-center mb-4">My Favorite Recipes</h1>
-
     <!-- show list when we have data -->
     <RecipePreviewList
       v-if="favorites.length"
-      :recipes="favorites"          
+      :recipes="favorites"
+      title="My Favorite Recipes"          
     />
     <!-- fallback if no favourites -->
     <div v-else class="text-center text-muted">

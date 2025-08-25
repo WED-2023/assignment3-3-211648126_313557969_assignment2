@@ -75,11 +75,7 @@ export default {
 <style lang="scss">
 @import "@/scss/form-style.scss";
 
-h1 {
-  background-color: #ffffff;
-  display: inline-block; /* ✅ shrink background to fit text */
-  padding: 0.2em 0.5em;  /* optional: some space around text */
-}
+
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
