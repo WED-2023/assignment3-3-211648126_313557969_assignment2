@@ -17,12 +17,12 @@
         {{ localRecipe.title }}
       </h5>
 
-      <p class="text-muted mb-1">⏱ {{ localRecipe.duration }} min</p>
+      <p class="text-muted mb-1">⏱ {{ localRecipe.duration ?? localRecipe.prep_time }} min</p>
 
       <p class="flags mb-2">
-        <span v-if="localRecipe.vegan">🌱 Vegan&nbsp;</span>
-        <span v-else-if="localRecipe.vegetarian">🥬 Vegetarian&nbsp;</span>
-        <span v-if="localRecipe.glutenFree">🌾 GF</span>
+        <span v-if="localRecipe.vegan ?? localRecipe.is_vegan">🌱 Vegan&nbsp;</span>
+        <span v-else-if="localRecipe.vegetarian ?? localRecipe.is_vegetarian">🥬 Vegetarian&nbsp;</span>
+        <span v-if="localRecipe.glutenFree ?? localRecipe.is_gluten_free">🌾 GF</span>
       </p>
 
       <!-- Favorite toggle -->

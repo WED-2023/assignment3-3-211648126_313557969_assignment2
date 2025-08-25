@@ -5,18 +5,24 @@ const store = reactive({
   server_domain: "http://localhost:3000",
   randomRecipes:[],
 
+  lastSearchResults: JSON.parse(localStorage.getItem('last_search_results') || '[]'),
+
+  setLastSearchResults(results) {
+    this.lastSearchResults = results
+    localStorage.setItem('last_search_results', JSON.stringify(results))
+  },
+
   login(username) {
     localStorage.setItem('username', username);
     this.username = username;
     console.log("login", this.username);
-    localStorage.setItem("recipes", JSON.stringify({}));
   },
 
   logout() {
     console.log("logout");
     localStorage.removeItem('username');
     this.username = undefined;
-    localStorage.removeItem('recipes');
+    localStorage.removeItem('last_search_results')
     this.recipes = undefined;
   }
 });

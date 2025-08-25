@@ -48,6 +48,7 @@ import store from '../store'
      },
      async fetchFromApi(){
       const response = await window.axios.get("/recipes", { params: { limit: 3 }});
+      this.updateRecipesInCache(response.data, "recipes");
       const fullRecipes = response.data.map(r => ({
           id:         r.id,
           title:      r.title,
@@ -59,7 +60,6 @@ import store from '../store'
           favorite:   r.favorite || false,
           viewed:     r.viewed   || false
         }));
-      this.updateRecipesInCache(fullRecipes, "recipes");
       return fullRecipes;
      },
     /* fetch random 3 recipes from backend when no prop is given */
