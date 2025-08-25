@@ -9,13 +9,14 @@
         <button class="btn btn-primary">You need to Login to view this</button>
       </router-link>
     </div>
-
-    <RecipePreviewList
-     v-if="!loading && results.length "
-       title="Last Viewed Recipes"
-      :recipes="results"
-    />
-    <p v-if="loading">Loading watched recipes…</p>
+    <div v-else>
+      <RecipePreviewList
+      v-if="!loading && results.length "
+        title="Last Viewed Recipes"
+        :recipes="results"
+      />
+      <p v-if="loading">Loading watched recipes…</p>
+    </div>
   </div>
 </template>
 
@@ -80,7 +81,7 @@ export default {
 
       } catch (e) {
         error.value = e?.response?.data?.message || e.message || 'Failed to load recipes'
-        alert(error.value)
+        console.log("Error loading watched recipes: ",error.value);
       } finally {
         loading.value = false
       }
